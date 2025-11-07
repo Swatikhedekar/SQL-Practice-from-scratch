@@ -61,7 +61,8 @@ select * from dim_product;
 select * from dim_product
 order by 
 	unit_price desc;
-    
+
+## top 3 records has higest unit price
 select * from dim_product
 order by 
 	unit_price desc limit 3;
@@ -69,7 +70,8 @@ order by
 select product_key, product_id, product_name as"Product Name", category
 from dim_product;
 
-# grouping
+# grouping(quising)
+# avg price and total price by each category
 select 
 	category, 
 	avg(unit_price) "avg_price",
@@ -77,6 +79,14 @@ select
 from 
 	dim_product
 group by category;
+
+select 
+	brand, 
+	avg(unit_price) "avg_price",
+	sum(unit_price) "Total_Price"
+from 
+	dim_product
+group by brand;
 
 select 
 	category, 
@@ -87,6 +97,7 @@ from
 group by category
 order by total_price desc;
 
+# fetch those records whose avg price is > 500
 select 
 	category, 
 	avg(unit_price) "avg_price",
@@ -95,3 +106,13 @@ from
 	dim_product
 group by category
 having avg_price >500;
+
+# execution flow
+/* 1. select the table
+2. pronning the table-- filter the records for optimization table
+3. grouping the data
+4. having if we have condition
+5. select everything
+6. order by
+7. limit the records
+*/
