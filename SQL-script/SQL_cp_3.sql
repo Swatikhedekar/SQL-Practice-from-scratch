@@ -107,7 +107,7 @@ from
 group by category
 having avg_price >500;
 
-# execution flow
+# execution flow in sql
 /* 1. select the table
 2. pronning the table-- filter the records for optimization table
 3. grouping the data
