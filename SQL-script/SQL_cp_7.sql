@@ -11,7 +11,7 @@ SELECT
 FROM
 	dim_product;
 
--- 
+-- CONDITION WITH CONCAT FUNCTION
 SELECT 
 	*,
 	CASE
@@ -22,3 +22,50 @@ SELECT
     END AS "PRICE_CATEGORY"
 FROM
 	dim_product;
+    
+-- CREATE 3 CONDITIONAL CRATERIA
+
+SELECT * FROM FACT_SALES;
+SELECT * FROM FACT_SALES
+ORDER BY 
+	UNIT_PRICE DESC;
+
+-- 1. Categorize Sales Performance Based on Total Amount
+
+SELECT * FROM FACT_SALES
+ORDER BY 
+	TOTAL_AMOUNT DESC;
+    
+SELECT 
+	*,
+    CASE
+		WHEN TOTAL_AMOUNT >60 THEN 'HIGH SALES'
+		WHEN TOTAL_AMOUNT BETWEEN 30 AND 50 THEN "MEDIUM SALES"
+		ELSE 'LOW SALES'
+    END AS SLAES_CATEGORY
+FROM FACT_SALES;
+
+## 2. Flag Discounts as Generous, Normal, or None
+SELECT * FROM FACT_SALES
+ORDER BY 
+	DISCOUNT DESC ;
+
+SELECT 
+	*,
+    CASE
+		WHEN DISCOUNT >=40 THEN 'High Discount'
+		WHEN DISCOUNT BETWEEN 10 AND 39 THEN 'MODERATE Discount'
+		WHEN DISCOUNT <=10 THEN 'LOW Discount'
+        ELSE 'O DISCOUNT'
+    END AS DISCOUNT_TYPE
+FROM FACT_SALES;
+
+## 3. Combine Conditions: Profitability or Loss Check
+SELECT
+*,
+CASE
+	WHEN total_amount < 0 THEN 'Invalid Sale'
+	WHEN total_amount >= (quantity_sold * unit_price) - discount THEN 'Profitable'
+	ELSE 'Less Profitable'
+END AS profit_status
+FROM FACT_SALES;
